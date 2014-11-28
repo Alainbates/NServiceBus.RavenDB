@@ -89,7 +89,13 @@
                 int buildVersion;
                 if (!int.TryParse(BuildVersion, out buildVersion))
                     return false;
-                return !string.IsNullOrEmpty(ProductVersion) && ProductVersion.StartsWith("2.5") && buildVersion >= 2900;
+
+                double productVersion;
+                if (String.IsNullOrEmpty(ProductVersion) ||
+                        !Double.TryParse(ProductVersion.Substring(0,3), out productVersion))
+                    return false;
+
+                return productVersion >= 2.5 && buildVersion >= 2900;
             }
 
             public override string ToString()
